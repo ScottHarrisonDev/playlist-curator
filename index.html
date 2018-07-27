@@ -15,16 +15,28 @@
     <div id="app">
 
         <label>Search</label>
-        <input type="text" id="search" v-model="search">
+        <input type="text" id="searchString" v-model="searchString">
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+
     <script>
-        var app = new Vue({
+        const token = 'BQC-5X6R3fLROhtIOhFtHOh5p-TUV-qULHRTG9pm2qq5MBYn44DzyuslGWTUAUUbmB1yhLZmZdze_3P4QXM';
+        const spotifyUrl = 'https://api.spotify.com/v1/';
+
+        let app = new Vue({
             el: "#app",
             data: {
-                search: ''
+                searchString: ''
+            },
+            watch: {
+                searchString: function (oldVal, newVal) {
+                    this.$http.get(`${spotifyUrl}search?q=${encodeURI(newVal)}&type=track`, { headers: { 'Authorization': `Bearer ${token}` } }).then(response => {
+                        console.log(response.body);
+                    });
+                }
             }
         });
     </script>
