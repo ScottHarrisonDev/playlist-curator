@@ -1,3 +1,12 @@
+<!-- 
+TODO
+1. auth as user
+2. create playlist - https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/
+3. add songs to playlist - https://developer.spotify.com/documentation/web-api/reference/playlists/replace-playlists-tracks/
+4. style site
+ -->
+
+
 <!DOCTYPE html>
 <html>
 
@@ -14,8 +23,25 @@
 
     <div id="app">
 
-        <label>Search</label>
-        <input type="text" id="searchString" v-model="searchString">
+        <div class="explorer">
+            <label>Search</label>
+            <input type="text" id="searchString" v-model="searchString">
+            <ul>
+                <li v-for="track in tracklist">
+                    {{ track.name }} - {{ track.artists[0].name }}
+                    <button v-on:click="addTrack(track.id)">Add</button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="playlist">
+            <h2>Playlist</h2>
+            <ul>
+                <li v-for="track in selectedTracks">
+                    {{ track }}
+                </li>
+            </ul>
+        </div>
 
     </div>
 
@@ -23,19 +49,31 @@
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 
     <script>
-        const token = 'BQC-5X6R3fLROhtIOhFtHOh5p-TUV-qULHRTG9pm2qq5MBYn44DzyuslGWTUAUUbmB1yhLZmZdze_3P4QXM';
+        const token = 'BQCU5VHghcz-SrwEHSDLS6UFHIFLe2v4YpfguMouN780n0AfZv7zs4gbPsvQUrgzvEgpqeB8PbNCRCUlT60';
         const spotifyUrl = 'https://api.spotify.com/v1/';
 
         let app = new Vue({
             el: "#app",
             data: {
-                searchString: ''
+                searchString: '',
+                tracklist: [],
+                selectedTracks: []
             },
             watch: {
-                searchString: function (oldVal, newVal) {
+                searchString: function (newVal, oldVal) {
+                    if (newVal.length < 3) {
+                        this.tracklist = [];
+                        return;
+                    }
                     this.$http.get(`${spotifyUrl}search?q=${encodeURI(newVal)}&type=track`, { headers: { 'Authorization': `Bearer ${token}` } }).then(response => {
-                        console.log(response.body);
+                        this.tracklist = response.body.tracks.items.slice(0, 3);
                     });
+                }
+            },
+            methods: {
+                addTrack: function (track) {
+                    if (this.selectedTracks.includes(track)) return;
+                    this.selectedTracks.push(track);
                 }
             }
         });
