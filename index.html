@@ -6,7 +6,6 @@ TODO
 4. style site
  -->
 
-
 <!DOCTYPE html>
 <html>
 
@@ -29,7 +28,7 @@ TODO
             <ul>
                 <li v-for="track in tracklist">
                     {{ track.name }} - {{ track.artists[0].name }}
-                    <button v-on:click="addTrack(track.id)">Add</button>
+                    <button v-on:click="selectTrack(track.uri)">Add</button>
                 </li>
             </ul>
         </div>
@@ -43,13 +42,25 @@ TODO
             </ul>
         </div>
 
+        <div class="controls">
+            <button v-on:click="createPlaylist()">
+                Create Playlist
+            </button>
+            <button v-on:click="addSongsToPlaylist()">
+                Add Songs To Playlist
+            </button>
+            <button v-on:click="auth()">
+                Auth
+            </button>
+        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 
     <script>
-        const token = 'BQCU5VHghcz-SrwEHSDLS6UFHIFLe2v4YpfguMouN780n0AfZv7zs4gbPsvQUrgzvEgpqeB8PbNCRCUlT60';
+        const userId = 'mocup';
         const spotifyUrl = 'https://api.spotify.com/v1/';
 
         let app = new Vue({
@@ -57,7 +68,8 @@ TODO
             data: {
                 searchString: '',
                 tracklist: [],
-                selectedTracks: []
+                selectedTracks: [],
+                playlistId: ''
             },
             watch: {
                 searchString: function (newVal, oldVal) {
@@ -65,15 +77,33 @@ TODO
                         this.tracklist = [];
                         return;
                     }
-                    this.$http.get(`${spotifyUrl}search?q=${encodeURI(newVal)}&type=track`, { headers: { 'Authorization': `Bearer ${token}` } }).then(response => {
+                    this.$http.get(`${spotifyUrl}search?q=${encodeURI(newVal)}&type=track`, { headers: { 'Authorization': `Bearer ${userToken}` } }).then(response => {
                         this.tracklist = response.body.tracks.items.slice(0, 3);
                     });
                 }
             },
             methods: {
-                addTrack: function (track) {
+                selectTrack: function (track) {
                     if (this.selectedTracks.includes(track)) return;
                     this.selectedTracks.push(track);
+                },
+                createPlaylist: function () {
+                    const playlist = {
+                        name: 'test playlist',
+                        public: false,
+                        description: 'Created with Spotify Playlist Curator'
+                    }
+                    this.$http.post(`${spotifyUrl}users/${userId}/playlists`, JSON.stringify(playlist), { headers: { 'Authorization': `Bearer ${userToken}`, 'Content-Type': 'application/json' } }).then(response => {
+                        this.playlistId = response.body.id;
+                    });
+                },
+                addSongsToPlaylist: function () {
+                    this.$http.put(`${spotifyUrl}users/${userId}/playlists/${this.playlistId}/tracks`, JSON.stringify({ uris: this.selectedTracks }), { headers: { 'Authorization': `Bearer ${userToken}`, 'Content-Type': 'application/json' } }).then(response => {
+                        this.playlistId = response.body.id;
+                    });
+                },
+                auth: function () {
+
                 }
             }
         });
