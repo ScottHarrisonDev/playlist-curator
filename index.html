@@ -6,55 +6,69 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Playlist Curator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .unfinished {
+            position: absolute;
+            top: 100vh;
+        }
+
+        html,
+        body {
+            background-color: #BB9C9A;
+            color: #627B76;
+        }
+
+        aside {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            background-color: #627B76;
+            color: #BB9C9A;
+        }
+    </style>
 </head>
 
 <body>
-
-    <h1>Playlist Curator</h1>
-
     <div id="app">
-
-        <div class="debug" style="position:fixed;top:0;right:0;border:1px solid red;width:30%;" v-if="user.tokenDetails">
-            <h3>Debug</h3>
-            <br> Token: {{ user.tokenDetails.access_token }}
-            <br> Expires In: {{ user.tokenDetails.expires_in }}
-            <br> Token Type: {{ user.tokenDetails.token_type }}
+        <div class="">
+            <main>
+                <div class="intro">
+                    <h1>Title goes here</h1>
+                    <p>
+                        You are currently authenticated as:
+                        <strong>{{ user.id }}</strong>
+                    </p>
+                    <p>
+                        This is a minimal, simple, playlist builder which allows you to quickly create and save playlists to Spotify. Useful if you
+                        are in a hurry, don't have access to a Spotify application or just want to create playlists quicker!
+                    </p>
+                </div>
+                <div class="search">
+                    <div class="input-group">
+                        <label>Search</label>
+                        <input type="text" v-model="search.string">
+                    </div>
+                </div>
+                <div class="results">
+                    <ul v-if="search.results">
+                        <li v-for="result in search.results">
+                            {{ result.name }} - {{ result.artists[0].name }}
+                            <button v-on:click="selectTrack(result.uri)">Add</button>
+                        </li>
+                    </ul>
+                </div>
+            </main>
+            <aside>
+                <h2>{{ playlist.name }}</h2>
+                <ul v-if="playlist.tracks">
+                    <li v-for="track in playlist.tracks">{{ track }}</li>
+                </ul>
+                <div class="controls">
+                    <button v-on:click="createPlaylist()">Save Playlist</button>
+                </div>
+            </aside>
         </div>
-
-        <div class="explorer">
-            <label>Search</label>
-            <input type="text" id="searchString" v-model="search.string">
-            <ul>
-                <li v-for="result in search.results">
-                    {{ result.name }} - {{ result.artists[0].name }}
-                    <button v-on:click="selectTrack(result.uri)">Add</button>
-                </li>
-            </ul>
-        </div>
-
-        <div class="playlist">
-            <h2>Playlist</h2>
-            <label>Name: </label>
-            <input type="text" id="playlistName" v-model="playlist.name">
-            <ul>
-                <li v-for="track in playlist.tracks">
-                    {{ track }}
-                </li>
-            </ul>
-        </div>
-
-        <div class="controls">
-            <button v-on:click="createPlaylist()">
-                Create Playlist
-            </button>
-            <button v-on:click="addSongsToPlaylist()">
-                Add Songs To Playlist
-            </button>
-            <button v-on:click="auth()" v-if="! authed">
-                Auth
-            </button>
-        </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
@@ -77,7 +91,7 @@
                 },
                 search: {
                     string: null,
-                    results: null
+                    results: []
                 },
                 user: {
                     id: null,
@@ -85,8 +99,8 @@
                 },
                 playlist: {
                     id: null,
-                    name: null,
-                    tracks: null
+                    name: 'New Playlist',
+                    tracks: []
                 }
             },
             computed: {
@@ -95,7 +109,7 @@
                 }
             },
             watch: {
-                searchString: function (newVal, oldVal) {
+                "search.string": function (newVal, oldVal) {
                     if (newVal.length < 3) {
                         this.search.results = [];
                         return;
@@ -118,12 +132,11 @@
                     }
                     this.$http.post(`${this.app.baseUrl}users/${this.user.id}/playlists`, JSON.stringify(playlist), { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}`, 'Content-Type': 'application/json' } }).then(response => {
                         this.playlist.id = response.body.id;
+                        this.addSongsToPlaylist();
                     });
                 },
                 addSongsToPlaylist: function () {
-                    this.$http.put(`${this.app.baseUrl}users/${this.user.id}/playlists/${this.playlist.id}/tracks`, JSON.stringify({ uris: this.playlist.tracks }), { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}`, 'Content-Type': 'application/json' } }).then(response => {
-                        this.playlist.id = response.body.id;
-                    });
+                    this.$http.put(`${this.app.baseUrl}users/${this.user.id}/playlists/${this.playlist.id}/tracks`, JSON.stringify({ uris: this.playlist.tracks }), { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}`, 'Content-Type': 'application/json' } });
                 },
                 auth: function () {
                     window.location.replace(`${this.app.authUrl}?scope=playlist-modify-private&response_type=token&client_id=${this.app.clientId}&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080`);
