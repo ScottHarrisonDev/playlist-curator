@@ -14,20 +14,20 @@
 
     <div id="app">
 
-        <div class="debug" style="position:fixed;top:0;right:0;border:1px solid red;width:30%;" v-if="tokenDetails">
+        <div class="debug" style="position:fixed;top:0;right:0;border:1px solid red;width:30%;" v-if="user.tokenDetails">
             <h3>Debug</h3>
-            <br> Token: {{ tokenDetails.access_token }}
-            <br> Expires In: {{ tokenDetails.expires_in }}
-            <br> Token Type: {{ tokenDetails.token_type }}
+            <br> Token: {{ user.tokenDetails.access_token }}
+            <br> Expires In: {{ user.tokenDetails.expires_in }}
+            <br> Token Type: {{ user.tokenDetails.token_type }}
         </div>
 
         <div class="explorer">
             <label>Search</label>
-            <input type="text" id="searchString" v-model="searchString">
+            <input type="text" id="searchString" v-model="search.string">
             <ul>
-                <li v-for="track in tracklist">
-                    {{ track.name }} - {{ track.artists[0].name }}
-                    <button v-on:click="selectTrack(track.uri)">Add</button>
+                <li v-for="result in search.results">
+                    {{ result.name }} - {{ result.artists[0].name }}
+                    <button v-on:click="selectTrack(result.uri)">Add</button>
                 </li>
             </ul>
         </div>
@@ -35,9 +35,9 @@
         <div class="playlist">
             <h2>Playlist</h2>
             <label>Name: </label>
-            <input type="text" id="playlistName" v-model="playlistName">
+            <input type="text" id="playlistName" v-model="playlist.name">
             <ul>
-                <li v-for="track in selectedTracks">
+                <li v-for="track in playlist.tracks">
                     {{ track }}
                 </li>
             </ul>
@@ -66,68 +66,72 @@
             return (str || document.location.search).replace(/(^\?)/, '').split("&").map(function (n) { return n = n.split("="), this[n[0]] = n[1], this }.bind({}))[0];
         }
 
-        // app config
-        const clientId = 'eb652d287e6e4ed4a108c5c96ed8c609';
-        const urls = {
-            baseUrl: 'https://api.spotify.com/v1/',
-            authUrl: 'https://accounts.spotify.com/authorize'
-        };
-
         // app code
         let app = new Vue({
             el: "#app",
             data: {
-                searchString: '',
-                tracklist: [],
-                selectedTracks: [],
-                playlistId: '',
-                playlistName: '',
-                userId: '',
-                tokenDetails: window.location.hash ? getQueryParameters(window.location.hash.substring(1)) : null
+                app: {
+                    clientId: 'eb652d287e6e4ed4a108c5c96ed8c609',
+                    baseUrl: 'https://api.spotify.com/v1/',
+                    authUrl: 'https://accounts.spotify.com/authorize'
+                },
+                search: {
+                    string: null,
+                    results: null
+                },
+                user: {
+                    id: null,
+                    tokenDetails: window.location.hash ? getQueryParameters(window.location.hash.substring(1)) : null
+                },
+                playlist: {
+                    id: null,
+                    name: null,
+                    tracks: null
+                }
             },
             computed: {
                 authed: function () {
-                    return this.tokenDetails !== null;
+                    return this.user.tokenDetails !== null;
                 }
             },
             watch: {
                 searchString: function (newVal, oldVal) {
                     if (newVal.length < 3) {
-                        this.tracklist = [];
+                        this.search.results = [];
                         return;
                     }
-                    this.$http.get(`${urls.baseUrl}search?q=${encodeURI(newVal)}&type=track`, { headers: { 'Authorization': `${this.tokenDetails.token_type} ${this.tokenDetails.access_token}` } }).then(response => {
-                        this.tracklist = response.body.tracks.items.slice(0, 3);
+                    this.$http.get(`${this.app.baseUrl}search?q=${encodeURI(newVal)}&type=track`, { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}` } }).then(response => {
+                        this.search.results = response.body.tracks.items.slice(0, 3);
                     });
                 }
             },
             methods: {
                 selectTrack: function (track) {
-                    if (this.selectedTracks.includes(track)) return;
-                    this.selectedTracks.push(track);
+                    if (this.playlist.tracks.includes(track)) return;
+                    this.playlist.tracks.push(track);
                 },
                 createPlaylist: function () {
                     const playlist = {
-                        name: this.playlistName,
+                        name: this.playlist.name,
                         public: false,
                         description: 'Created with Spotify Playlist Curator'
                     }
-                    this.$http.post(`${urls.baseUrl}users/${this.userId}/playlists`, JSON.stringify(playlist), { headers: { 'Authorization': `${this.tokenDetails.token_type} ${this.tokenDetails.access_token}`, 'Content-Type': 'application/json' } }).then(response => {
-                        this.playlistId = response.body.id;
+                    this.$http.post(`${this.app.baseUrl}users/${this.user.id}/playlists`, JSON.stringify(playlist), { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}`, 'Content-Type': 'application/json' } }).then(response => {
+                        this.playlist.id = response.body.id;
                     });
                 },
                 addSongsToPlaylist: function () {
-                    this.$http.put(`${urls.baseUrl}users/${this.userId}/playlists/${this.playlistId}/tracks`, JSON.stringify({ uris: this.selectedTracks }), { headers: { 'Authorization': `${this.tokenDetails.token_type} ${this.tokenDetails.access_token}`, 'Content-Type': 'application/json' } }).then(response => {
-                        this.playlistId = response.body.id;
+                    this.$http.put(`${this.app.baseUrl}users/${this.user.id}/playlists/${this.playlist.id}/tracks`, JSON.stringify({ uris: this.playlist.tracks }), { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}`, 'Content-Type': 'application/json' } }).then(response => {
+                        this.playlist.id = response.body.id;
                     });
                 },
                 auth: function () {
-                    window.location.replace(`${urls.authUrl}?scope=playlist-modify-private&response_type=token&client_id=${clientId}&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080`);
+                    window.location.replace(`${this.app.authUrl}?scope=playlist-modify-private&response_type=token&client_id=${this.app.clientId}&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080`);
                 }
             },
             created: function () {
-                this.$http.get(`${urls.baseUrl}me`, { headers: { 'Authorization': `${this.tokenDetails.token_type} ${this.tokenDetails.access_token}` } }).then(response => {
-                    this.userId = response.body.id;
+                this.$http.get(`${this.app.baseUrl}me`, { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}` } }).then(response => {
+                    this.user.id = response.body.id;
                 });
             }
         });
