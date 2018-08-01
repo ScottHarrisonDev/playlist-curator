@@ -7,15 +7,22 @@
     <title>Playlist Curator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        .unfinished {
-            position: absolute;
-            top: 100vh;
-        }
-
         html,
         body {
             background-color: #BB9C9A;
             color: #627B76;
+        }
+
+        .notification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            padding: 20px 0;
+            text-align: center;
+            background-color: #555;
+            color: #fff;
         }
 
         aside {
@@ -31,44 +38,46 @@
 
 <body>
     <div id="app">
-        <div class="">
-            <main>
-                <div class="intro">
-                    <h1>Title goes here</h1>
-                    <p>
-                        You are currently authenticated as:
-                        <strong>{{ user.id }}</strong>
-                    </p>
-                    <p>
-                        This is a minimal, simple, playlist builder which allows you to quickly create and save playlists to Spotify. Useful if you
-                        are in a hurry, don't have access to a Spotify application or just want to create playlists quicker!
-                    </p>
-                </div>
-                <div class="search">
-                    <div class="input-group">
-                        <label>Search</label>
-                        <input type="text" v-model="search.string">
-                    </div>
-                </div>
-                <div class="results">
-                    <ul v-if="search.results">
-                        <li v-for="result in search.results">
-                            {{ result.name }} - {{ result.artists[0].name }}
-                            <button v-on:click="selectTrack(result.uri)">Add</button>
-                        </li>
-                    </ul>
-                </div>
-            </main>
-            <aside>
-                <h2>{{ playlist.name }}</h2>
-                <ul v-if="playlist.tracks">
-                    <li v-for="track in playlist.tracks">{{ track }}</li>
-                </ul>
-                <div class="controls">
-                    <button v-on:click="createPlaylist()">Save Playlist</button>
-                </div>
-            </aside>
+        <div class="notification" v-if="! authed">
+            You are currently not logged in. Please
+            <button v-on:click="auth">Login with Spotify</button>
         </div>
+        <main>
+            <div class="intro">
+                <h1>Title goes here</h1>
+                <p>
+                    You are currently authenticated as:
+                    <strong>{{ user.id }}</strong>
+                </p>
+                <p>
+                    This is a minimal, simple, playlist builder which allows you to quickly create and save playlists to Spotify. Useful if you
+                    are in a hurry, don't have access to a Spotify application or just want to create playlists quicker!
+                </p>
+            </div>
+            <div class="search">
+                <div class="input-group">
+                    <label>Search</label>
+                    <input type="text" v-model="search.string">
+                </div>
+            </div>
+            <div class="results">
+                <ul v-if="search.results">
+                    <li v-for="result in search.results">
+                        {{ result.name }} - {{ result.artists[0].name }}
+                        <button v-on:click="selectTrack(result.uri)">Add</button>
+                    </li>
+                </ul>
+            </div>
+        </main>
+        <aside>
+            <h2>{{ playlist.name }}</h2>
+            <ul v-if="playlist.tracks">
+                <li v-for="track in playlist.tracks">{{ track }}</li>
+            </ul>
+            <div class="controls">
+                <button v-on:click="createPlaylist()">Save Playlist</button>
+            </div>
+        </aside>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
