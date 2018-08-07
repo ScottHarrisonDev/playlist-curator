@@ -1,0 +1,113 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background-color: #242f35;
+    color: #99b4af;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+
+h1 {
+    color: #c9ad6e;
+    font-family: 'Lobster', sans-serif;
+    font-weight: normal;
+    font-size: 4rem;
+    margin: 30px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+aside {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 20%;
+    background-color: #627B76;
+    color: #BB9C9A;
+}
+
+.card {
+    background-color: #2c3a42;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 25px;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    text-align: center;
+}
+
+.spotify-btn {
+    background-color: #1db954;
+    outline: transparent;
+    border: transparent;
+    border-radius: 100px;
+    color: #fff;
+    padding: 15px 30px;
+    text-transform: uppercase;
+    font-size: .7rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    margin: 20px 0;
+    transition: transform 0.3s;
+}
+
+.spotify-btn:hover {
+    transform: scale(1.05);
+}
+
+.spotify-btn:active {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) inset, 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+main {
+    max-width: 35%;
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.results.active {
+    position: absolute;
+    width: 100%;
+    background-color: rgba(24, 24, 27, 0.58);
+    margin-top: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    padding: 15px;
+}
+.results img {
+    max-width: 75px;
+}
+
+.search input {
+    font-size: 2rem;
+    width: 100%;
+    padding: 10px;
+    border-radius: 2px;
+    border: transparent;
+    background-color: #0a0d0e4f;
+    color: #99b4af;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.sr-only {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    top: auto;
+    overflow: hidden;
+  }
+
+  ul {
+      padding: 0;
+      margin: 0;
+  }
+  li {
+      list-style: none;
+  }
