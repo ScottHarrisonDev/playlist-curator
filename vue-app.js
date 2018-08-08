@@ -50,6 +50,9 @@ let app = new Vue({
             if (this.playlist.tracks.includes(track)) return;
             this.playlist.tracks.push(track);
         },
+        removeTrack: function (track) {
+            this.playlist.tracks = this.playlist.tracks.filter(currTrack => currTrack !== track);
+        },
         createPlaylist: function () {
             const playlist = {
                 name: this.playlist.name,
