@@ -19,14 +19,33 @@ h1 {
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
 }
 
+.new-playlist-input {
+    background-color: transparent;
+    border-color: transparent;
+    border-radius: 2px;
+    font-size: 2.5rem;
+    text-align: center;
+    color: #c9ad6e;
+    font-family: "Lobster";
+    font-weight: normal;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
 aside {
     position: fixed;
     right: 0;
     top: 0;
     height: 100vh;
     width: 20%;
-    background-color: #627B76;
-    color: #BB9C9A;
+    background-color: #2c3a42;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    text-align: center;
+}
+
+hr {
+    border-color: #c9ad6e;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
 .card {
@@ -34,6 +53,17 @@ aside {
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 25px;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    text-align: center;
+}
+
+.card-offset {
+    background-color: #2c3a42;
+    position: absolute;
+    top: 35%;
+    left: 40%;
     transform: translate(-50%, -50%);
     padding: 25px;
     box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -74,13 +104,13 @@ main {
 
 .results.active {
     position: absolute;
-    width: 100%;
+    width: calc(100% - 50px);
     background-color: rgba(24, 24, 27, 0.58);
     margin-top: 5px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
     padding: 15px;
 }
-.results img {
+.album-art {
     max-width: 75px;
 }
 
@@ -114,6 +144,13 @@ main {
       grid-template-columns: 15% 70% 15%;
       margin-bottom: 5px;
   }
+
+ aside li {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    margin-bottom: 5px;
+}
   li p {
       margin: 0;
   }
@@ -141,4 +178,16 @@ main {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+    cursor: pointer;
+  }
+
+  .controls button {
+      border: transparent;
+      outline: transparent;
+      border-radius: 2px;
+      background-color: #c9ad6e;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
   }

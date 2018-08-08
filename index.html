@@ -15,18 +15,14 @@
 <body>
     <div id="app">
 
-
-
         <div class="card" v-if="! authed">
             <h1>Playlist Curator</h1>
             <p>You are not currently logged in.</p>
             <button v-on:click="auth" class="spotify-btn">Login with Spotify</button>
         </div>
 
-
-
         <div class="main-wrapper" v-if="authed">
-            <main>
+            <main class="card-offset">
                 <div class="intro">
                     <h1>Playlist Curator</h1>
                     <p>
@@ -42,26 +38,35 @@
                     <ul v-if=" search.results.length > 0">
                         <li v-for="result in search.results">
                             <div>
-                                <img v-bind:src="result.album.images[0].url">
+                                <img class="album-art" v-bind:src="result.album.images[0].url">
                             </div>
                             <div class="relative">
                                 <p class="song-name">{{ result.name }}</p>
                                 <p class="artist-name">{{ result.artists[0].name }}</p>
                             </div>
                             <div class="relative">
-                                <button class="add-song" v-on:click="selectTrack(result)">Add</button>
+                                <button class="add-song" v-on:click="selectTrack(result)">+</button>
                             </div>
                         </li>
                     </ul>
                 </div>
             </main>
             <aside>
-                <h2>{{ playlist.name }}</h2>
+                <input class="new-playlist-input" type="text" v-model="playlist.name">
+                <hr>
                 <ul v-if="playlist.tracks">
-                    <li v-for="track in playlist.tracks">{{ track }}</li>
+                    <li v-for="track in playlist.tracks">
+                        <div>
+                            <img class="album-art" v-bind:src="track.album.images[0].url">
+                        </div>
+                        <div class="relative">
+                            <p class="song-name">{{ track.name }}</p>
+                            <p class="artist-name">{{ track.artists[0].name }}</p>
+                        </div>
+                    </li>
                 </ul>
                 <div class="controls">
-                    <button v-on:click="createPlaylist()">Save Playlist</button>
+                    <button v-on:click="createPlaylist()" v-if="playlist.tracks.length">Save Playlist</button>
                 </div>
             </aside>
         </div>
@@ -69,7 +74,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-    <script src="app.js"></script>
+    <script src="vue-app.js"></script>
+    <script src="p5.min.js"></script>
+    <script src="bg.js"></script>
 </body>
 
 </html>

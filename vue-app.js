@@ -29,6 +29,9 @@ let app = new Vue({
     computed: {
         authed: function () {
             return this.user.tokenDetails !== null;
+        },
+        tracklist: function() {
+            return this.playlist.tracks.map(track => track.uri);
         }
     },
     watch: {
@@ -59,13 +62,14 @@ let app = new Vue({
             });
         },
         addSongsToPlaylist: function () {
-            this.$http.put(`${this.app.baseUrl}users/${this.user.id}/playlists/${this.playlist.id}/tracks`, JSON.stringify({ uris: this.playlist.tracks }), { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}`, 'Content-Type': 'application/json' } });
+            this.$http.put(`${this.app.baseUrl}users/${this.user.id}/playlists/${this.playlist.id}/tracks`, JSON.stringify({ uris: this.tracklist }), { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}`, 'Content-Type': 'application/json' } });
         },
         auth: function () {
             window.location.replace(`${this.app.authUrl}?scope=playlist-modify-private&response_type=token&client_id=${this.app.clientId}&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080`);
         }
     },
     created: function () {
+        if (! this.authed) return;
         this.$http.get(`${this.app.baseUrl}me`, { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}` } }).then(response => {
             this.user.id = response.body.id;
         });
