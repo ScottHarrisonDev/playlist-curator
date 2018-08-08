@@ -110,4 +110,35 @@ main {
   }
   li {
       list-style: none;
+      display: grid;
+      grid-template-columns: 15% 70% 15%;
+      margin-bottom: 5px;
+  }
+  li p {
+      margin: 0;
+  }
+  .song-name {
+    font-size: 1.5rem;
+    color: #c9ad6e;
+    position: absolute;
+    top: 5px;
+  }
+  .artist-name {
+    position: absolute;
+    bottom: 15px;
+  }
+  .relative {
+      position: relative;
+  }
+  .add-song {
+    border: transparent;
+    outline: transparent;
+    border-radius: 2px;
+    background-color: #c9ad6e;
+    color: #fff;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
   }
