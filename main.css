@@ -192,3 +192,30 @@ main {
       font-size: 1rem;
       cursor: pointer;
   }
+
+.help-text {
+    background-color: #242f35;
+    display: inline-block;
+    padding: 15px;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    margin-top: 5px;
+}
+
+.notification {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background-color: #2c3a42;
+    padding: 25px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    text-align: center;
+}
+
+
+a {
+    color: #c9ad6e;
+    border-bottom: 1px solid #c9ad6e;
+    text-decoration: none;
+}

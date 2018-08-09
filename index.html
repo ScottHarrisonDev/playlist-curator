@@ -14,11 +14,13 @@
 
 <body>
     <div id="app">
-
+        <div class="notification" v-if="notification">
+            {{ notification }}
+        </div>
         <div class="card" v-if="! authed">
             <h1>Playlist Curator</h1>
             <p>You are not currently logged in.</p>
-            <button v-on:click="auth" class="spotify-btn">Login with Spotify</button>
+            <button @click="auth" class="spotify-btn">Login with Spotify</button>
         </div>
 
         <div class="main-wrapper" v-if="authed">
@@ -28,6 +30,12 @@
                     <p>
                         This is a minimal, simple, playlist builder which allows you to quickly create and save playlists to Spotify. Useful if you
                         are in a hurry, don't have access to a Spotify application or just want to create playlists quicker!
+                    </p>
+                    <p>
+                        Simply search for a song, click the '+' button, give the playlist a name over on the right and click 'Save Playlist'!
+                    </p>
+                    <p>
+                        A project by <a href="https://github.com/scottharrisondev">Scott Harrison</a>
                     </p>
                 </div>
                 <div class="search">
@@ -54,6 +62,9 @@
             <aside>
                 <input class="new-playlist-input" type="text" v-model="playlist.name">
                 <hr>
+                <div class="help-text" v-if="defaultPlaylistName">
+                    Enter your new playlist name above.
+                </div>
                 <ul v-if="playlist.tracks">
                     <li v-for="track in playlist.tracks">
                         <div>
@@ -69,7 +80,7 @@
                     </li>
                 </ul>
                 <div class="controls">
-                    <button v-on:click="createPlaylist()" v-if="playlist.tracks.length">Save Playlist</button>
+                    <button v-on:click="createPlaylist()" v-if="playlist.tracks.length && ! defaultPlaylistName">Save Playlist</button>
                 </div>
             </aside>
         </div>

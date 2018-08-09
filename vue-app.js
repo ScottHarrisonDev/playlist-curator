@@ -24,7 +24,8 @@ let app = new Vue({
             id: null,
             name: 'New Playlist',
             tracks: []
-        }
+        },
+        notification: null
     },
     computed: {
         authed: function () {
@@ -32,6 +33,9 @@ let app = new Vue({
         },
         tracklist: function() {
             return this.playlist.tracks.map(track => track.uri);
+        },
+        defaultPlaylistName: function() {
+            return this.playlist.name === 'New Playlist';
         }
     },
     watch: {
@@ -54,6 +58,7 @@ let app = new Vue({
             this.playlist.tracks = this.playlist.tracks.filter(currTrack => currTrack !== track);
         },
         createPlaylist: function () {
+            if (this.defaultPlaylistName) return;
             const playlist = {
                 name: this.playlist.name,
                 public: false,
@@ -65,10 +70,24 @@ let app = new Vue({
             });
         },
         addSongsToPlaylist: function () {
-            this.$http.put(`${this.app.baseUrl}users/${this.user.id}/playlists/${this.playlist.id}/tracks`, JSON.stringify({ uris: this.tracklist }), { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}`, 'Content-Type': 'application/json' } });
+            this.$http.put(`${this.app.baseUrl}users/${this.user.id}/playlists/${this.playlist.id}/tracks`, JSON.stringify({ uris: this.tracklist }), { headers: { 'Authorization': `${this.user.tokenDetails.token_type} ${this.user.tokenDetails.access_token}`, 'Content-Type': 'application/json' } }).then(response => {
+                if (response.ok) this.notification = 'Playlist saved successfully!';
+                this.reset();
+            });
         },
         auth: function () {
             window.location.replace(`${this.app.authUrl}?scope=playlist-modify-private&response_type=token&client_id=${this.app.clientId}&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080`);
+        },
+        reset: function() {
+            this.playlist = {
+                id: null,
+                name: 'New Playlist',
+                tracks: []
+            };
+            this.search = {
+                string: null,
+                results: []
+            };
         }
     },
     created: function () {
