@@ -8,6 +8,7 @@ let app = new Vue({
     el: "#app",
     data: {
         app: {
+            url: 'http://127.0.0.1:8080',
             clientId: 'eb652d287e6e4ed4a108c5c96ed8c609',
             baseUrl: 'https://api.spotify.com/v1/',
             authUrl: 'https://accounts.spotify.com/authorize'
@@ -76,7 +77,7 @@ let app = new Vue({
             });
         },
         auth: function () {
-            window.location.replace(`${this.app.authUrl}?scope=playlist-modify-private&response_type=token&client_id=${this.app.clientId}&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080`);
+            window.location.replace(`${this.app.authUrl}?scope=playlist-modify-private&response_type=token&client_id=${this.app.clientId}&redirect_uri=${this.app.url}`);
         },
         reset: function() {
             this.playlist = {
@@ -88,6 +89,9 @@ let app = new Vue({
                 string: null,
                 results: []
             };
+        },
+        logout: function() {
+            window.location.href = this.app.url;
         }
     },
     created: function () {

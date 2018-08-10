@@ -14,13 +14,16 @@
 
 <body>
     <div id="app">
+        <button v-on:click="logout" v-if="authed" class="logout-btn">
+            Logout
+        </button>
         <div class="notification" v-if="notification">
             {{ notification }}
         </div>
         <div class="card" v-if="! authed">
             <h1>Playlist Curator</h1>
             <p>You are not currently logged in.</p>
-            <button @click="auth" class="spotify-btn">Login with Spotify</button>
+            <button v-on:click="auth" class="spotify-btn">Login with Spotify</button>
         </div>
 
         <div class="main-wrapper" v-if="authed">
