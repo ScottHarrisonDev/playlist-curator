@@ -53,7 +53,7 @@
                             </div>
                             <div class="relative">
                                 <p class="song-name">{{ result.name }}</p>
-                                <p class="artist-name">{{ result.artists[0].name }}</p>
+                                <p class="artist-name">{{ getArtists(result.artists) }}</p>
                             </div>
                             <div class="relative">
                                 <button class="add-song" v-on:click="selectTrack(result)">+</button>

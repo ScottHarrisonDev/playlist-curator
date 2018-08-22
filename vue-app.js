@@ -92,6 +92,11 @@ let app = new Vue({
         },
         logout: function() {
             window.location.href = this.app.url;
+        },
+        getArtists: function(artists) {
+            const artistsArr = artists.map(artist => artist.name);
+            
+            return artistsArr.join(', ');
         }
     },
     created: function () {
