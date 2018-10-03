@@ -62,7 +62,9 @@
                     </ul>
                 </div>
             </main>
-            <aside>
+            oie
+            {{playlist.tracks.length}}
+            <aside v-if="playlist.tracks.length">
                 <input class="new-playlist-input" type="text" v-model="playlist.name">
                 <hr>
                 <div class="help-text" v-if="defaultPlaylistName">
