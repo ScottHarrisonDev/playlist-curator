@@ -8,7 +8,7 @@ let app = new Vue({
     el: "#app",
     data: {
         app: {
-            url: 'http://127.0.0.1:8080',
+            url: 'https://scottharrisondev.github.io/playlist-curator/',
             clientId: 'eb652d287e6e4ed4a108c5c96ed8c609',
             baseUrl: 'https://api.spotify.com/v1/',
             authUrl: 'https://accounts.spotify.com/authorize'
