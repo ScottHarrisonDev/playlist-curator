@@ -3,8 +3,12 @@ let droplets = [];
 const lifespanStart = 10;
 
 function setup() {
-    canvas = createCanvas(window.innerWidth, window.innerHeight);
+    canvas = createCanvas(window.innerWidth - 50, window.innerHeight - 50);
     noStroke();
+}
+
+function windowResized() {
+  resizeCanvas(window.innerWidth - 50,windowHeight - 50);
 }
 
 function draw() {
