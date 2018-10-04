@@ -8,7 +8,7 @@ function setup() {
 }
 
 function windowResized() {
-  resizeCanvas(window.innerWidth - 50,windowHeight - 50);
+  resizeCanvas(window.innerWidth - 50, window.innerHeight - 50);
 }
 
 function draw() {
