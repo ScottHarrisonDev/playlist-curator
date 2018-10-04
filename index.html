@@ -51,11 +51,11 @@
                             <div>
                                 <img class="album-art" v-bind:src="result.album.images[0].url">
                             </div>
-                            <div class="relative">
+                            <div class="song-data-container">
                                 <p class="song-name">{{ result.name }}</p>
                                 <p class="artist-name">{{ getArtists(result.artists) }}</p>
                             </div>
-                            <div class="relative">
+                            <div class="add-song-container">
                                 <button class="add-song" v-on:click="selectTrack(result)">+</button>
                             </div>
                         </li>
