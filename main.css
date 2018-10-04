@@ -1,241 +1,259 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html,
-body {
-    background-color: #242f35;
-    color: #99b4af;
-    font-family: 'Roboto', sans-serif;
-    font-size: 18px;
+html, body {
+  background-color: #242f35;
+  color: #99b4af;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
-    color: #c9ad6e;
-    font-family: 'Lobster', sans-serif;
-    font-weight: normal;
-    font-size: 4rem;
-    margin: 30px;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
+  color: #c9ad6e;
+  font-family: 'Lobster', sans-serif;
+  font-weight: normal;
+  font-size: 4rem;
+  margin: 30px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
 }
 
 .new-playlist-input {
-    background-color: transparent;
-    border-color: transparent;
-    border-radius: 2px;
-    font-size: 2.5rem;
-    text-align: center;
-    color: #c9ad6e;
-    font-family: "Lobster";
-    font-weight: normal;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    outline: transparent;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 2px;
+  font-size: 2.5rem;
+  text-align: center;
+  color: #c9ad6e;
+  font-family: "Lobster";
+  font-weight: normal;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  outline: transparent;
 }
 
 aside {
-    position: fixed;
-    right: 0;
-    top: 0;
-    height: 100vh;
-    width: 20%;
-    background-color: #2c3a42;
-    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    text-align: center;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 20%;
+  background-color: #2c3a42;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  text-align: center;
 }
 
 hr {
-    border-color: #c9ad6e;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  border-color: #c9ad6e;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
 .card {
-    background-color: #2c3a42;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 25px;
-    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    text-align: center;
+  background-color: #2c3a42;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 25px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  text-align: center;
 }
 
 .card-offset {
-    background-color: #2c3a42;
-    position: absolute;
-    top: 35%;
-    left: 40%;
-    transform: translate(-50%, -50%);
-    padding: 25px;
-    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    text-align: center;
+  background-color: #2c3a42;
+  position: absolute;
+  top: 35%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  padding: 25px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  text-align: center;
 }
 
 .spotify-btn {
-    background-color: #1db954;
-    outline: transparent;
-    border: transparent;
-    border-radius: 100px;
-    color: #fff;
-    padding: 15px 30px;
-    text-transform: uppercase;
-    font-size: .7rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    margin: 20px 0;
-    transition: transform 0.3s;
+  background-color: #1db954;
+  outline: transparent;
+  border: transparent;
+  border-radius: 100px;
+  color: #fff;
+  padding: 15px 30px;
+  text-transform: uppercase;
+  font-size: .7rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  margin: 20px 0;
+  transition: transform 0.3s;
 }
 
 .spotify-btn:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .spotify-btn:active {
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) inset, 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) inset, 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
 main {
-    max-width: 35%;
-    position: absolute;
-    top: 30%;
-    left: 40%;
-    transform: translate(-50%, -50%);
+  max-width: 750px;
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  transform: translate(-50%, -50%);
 }
 
 .results.active {
-    position: absolute;
-    width: calc(100% - 50px);
-    background-color: rgba(24, 24, 27, 0.58);
-    margin-top: 5px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    padding: 15px;
+  position: absolute;
+  width: calc(100% - 50px);
+  background-color: rgba(24, 24, 27, 0.58);
+  margin-top: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  padding: 15px;
 }
+
 .album-art {
-    max-width: 75px;
+  max-width: 75px;
 }
 
 .search input {
-    font-size: 2rem;
-    width: 100%;
-    padding: 10px;
-    border-radius: 2px;
-    border: transparent;
-    background-color: #0a0d0e4f;
-    color: #99b4af;
-    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  font-size: 2rem;
+  width: 100%;
+  padding: 10px;
+  border-radius: 2px;
+  border: transparent;
+  background-color: #0a0d0e4f;
+  color: #99b4af;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
 .sr-only {
-    position: absolute;
-    left: -10000px;
-    width: 1px;
-    height: 1px;
-    top: auto;
-    overflow: hidden;
-  }
-
-  ul {
-      padding: 0;
-      margin: 0;
-  }
-  li {
-      list-style: none;
-      display: grid;
-      grid-template-columns: 15% 70% 15%;
-      margin-bottom: 5px;
-  }
-
- aside li {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 25% 50% 25%;
-    margin-bottom: 5px;
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  top: auto;
+  overflow: hidden;
 }
-  li p {
-      margin: 0;
-  }
-  .song-name {
-    font-size: 1.5rem;
-    color: #c9ad6e;
-    position: absolute;
-    top: 5px;
-  }
-  .artist-name {
-    position: absolute;
-    bottom: 15px;
-  }
-  .relative {
-      position: relative;
-  }
-  .add-song {
-    border: transparent;
-    outline: transparent;
-    border-radius: 2px;
-    background-color: #c9ad6e;
-    color: #fff;
-    padding: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    cursor: pointer;
-  }
 
-  .controls button {
-      border: transparent;
-      outline: transparent;
-      border-radius: 2px;
-      background-color: #c9ad6e;
-      color: #fff;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-  }
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 75px calc(100% - 150px) 75px;
+  margin-bottom: 5px;
+}
+
+aside li {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  margin-bottom: 5px;
+}
+
+li p {
+  margin: 0;
+}
+
+.song-name {
+  font-size: 1.5rem;
+  color: #c9ad6e;
+  position: relative;
+  display: block;
+  text-align: left;
+  width: 100%;
+  float: left;
+}
+
+.artist-name {
+  position: relative;
+  display: block;
+  float: left;
+  text-align: left;
+  width: 100%;
+}
+
+.song-data-container {
+  margin-left: 25px;
+}
+
+.add-song-container {
+  position: relative;
+}
+
+.add-song {
+  border: transparent;
+  outline: transparent;
+  border-radius: 2px;
+  background-color: #c9ad6e;
+  color: #fff;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.controls button {
+  border: transparent;
+  outline: transparent;
+  border-radius: 2px;
+  background-color: #c9ad6e;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
 .help-text {
-    background-color: #242f35;
-    display: inline-block;
-    padding: 15px;
-    border-radius: 2px;
-    margin-bottom: 15px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    margin-top: 5px;
+  background-color: #242f35;
+  display: inline-block;
+  padding: 15px;
+  border-radius: 2px;
+  margin-bottom: 15px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  margin-top: 5px;
 }
 
 .notification {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    background-color: #2c3a42;
-    padding: 25px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    text-align: center;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background-color: #2c3a42;
+  padding: 25px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  text-align: center;
 }
 
-
 a {
-    color: #c9ad6e;
-    border-bottom: 1px solid #c9ad6e;
-    text-decoration: none;
+  color: #c9ad6e;
+  border-bottom: 1px solid #c9ad6e;
+  text-decoration: none;
 }
 
 .logout-btn {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    padding: 15px;
-    border: transparent;
-    outline: transparent;
-    font-size: 1rem;
-    background-color: #2c3a42;
-    color: #99b4af;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    cursor: pointer;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 15px;
+  border: transparent;
+  outline: transparent;
+  font-size: 1rem;
+  background-color: #2c3a42;
+  color: #99b4af;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  cursor: pointer;
+  z-index: 9999;
 }
 
 .logout-btn:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .sidebar {
