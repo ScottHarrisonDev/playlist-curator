@@ -62,7 +62,8 @@
                     </ul>
                 </div>
             </main>
-            <aside>
+
+            <aside class="sidebar" v-bind:class="{active: playlist.tracks.length}">
                 <input class="new-playlist-input" type="text" v-model="playlist.name">
                 <hr>
                 <div class="help-text" v-if="defaultPlaylistName">

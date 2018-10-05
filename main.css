@@ -255,3 +255,12 @@ a {
 .logout-btn:hover {
   transform: scale(1.05);
 }
+
+.sidebar {
+    width: 0;
+    transition: width .5s;
+}
+
+.sidebar.active {
+    width: 20%;
+}
